@@ -2,6 +2,8 @@
 namespace App;
 
 
+use PDO;
+
 class SQLiteConnection {
 
     private $pdo;
@@ -29,6 +31,26 @@ class SQLiteConnection {
 
         try {
             $this->pdo->exec($command);
+
+        } catch (\Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function getLists()
+    {
+        if ($this->pdo == null) {
+            $this->pdo = new \PDO("sqlite:" . Config::PATH_TO_SQLITE_FILE);
+                    }
+        try {
+            $sql = "
+                SELECT * FROM taskList
+            ";
+
+            $stm = $this->pdo->prepare( $sql );
+            $stm->execute();
+
+            return $result = $stm->fetchAll(PDO::FETCH_OBJ);
 
         } catch (\Exception $e) {
             die($e->getMessage());

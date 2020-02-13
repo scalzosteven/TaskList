@@ -6,7 +6,13 @@ use PHPUnit\Framework\TestCase;
 
 class Test extends TestCase
 {
-  /**
+    public $taskList;
+    public function setUp()
+    {
+        $this->taskList = new SQLiteConnection();
+    }
+
+    /**
    * @test
    */
     public function should_generate_table()
@@ -22,20 +28,15 @@ class Test extends TestCase
         $taskListMock->connect();
     }
 
-//    /**
-//     * @test
-//     */
-//    public function should_get_all_list()
-//    {
-//        $taskListMock = $this->getMockBuilder(\App\TaskList::class)
-//            ->setMethods(['getLists'])
-//            ->getMock();
-//
-//        $taskListMock->expects($this->once())
-//            ->method('getLists')
-//            ->with($this->equalTo('Connected to the SQLite database successfully!'));
-//
-//        $taskListMock->getLists('Connected to the SQLite database successfully!');
-//    }
+    /**
+     * @test
+     */
+    public function should_get_all_list()
+    {
+        $result[] = array();
+        $result = $this->taskList->getLists();
+        $expected = array('name' => 'steven');
+        $this->assertEquals($expected, $result);
+    }
 
 }
