@@ -1,0 +1,11 @@
+version: '3'
+services:
+  web_task_list:
+    build: .
+    volumes:
+      - ./:/var/www/html
+
+    ports:
+      - 80:80
+
+
