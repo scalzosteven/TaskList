@@ -14,6 +14,7 @@ class SQLiteConnection {
 
         if ($this->pdo == null) {
             $this->pdo = new \PDO("sqlite:" . Config::PATH_TO_SQLITE_FILE);
+            $this->generateTable();
         }
 
     }
@@ -28,7 +29,7 @@ class SQLiteConnection {
 
         try {
             $this->pdo->exec($command);
-            return 'Connected to the SQLite database successfully!';
+
         } catch (\Exception $e) {
             die($e->getMessage());
         }

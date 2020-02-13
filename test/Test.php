@@ -6,21 +6,21 @@ use PHPUnit\Framework\TestCase;
 
 class Test extends TestCase
 {
-//  /**
-//   * @test
-//   */
-//    public function should_generate_table()
-//    {
-//        $taskListMock = $this->getMockBuilder(Index::class)
-//            ->setMethods(['generateTable'])
-//            ->getMock();
-//
-//        $taskListMock->expects($this->once())
-//            ->method('generateTable');
-//
-//
-//        $taskListMock->connection();
-//    }
+  /**
+   * @test
+   */
+    public function should_generate_table()
+    {
+        $taskListMock = $this->getMockBuilder(SQLiteConnection::class)
+            ->setMethods(['generateTable'])
+            ->getMock();
+
+        $taskListMock->expects($this->once())
+            ->method('generateTable');
+
+
+        $taskListMock->connect();
+    }
 
 //    /**
 //     * @test
