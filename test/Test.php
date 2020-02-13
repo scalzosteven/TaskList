@@ -35,7 +35,7 @@ class Test extends TestCase
     {
         $result[] = array();
         $result = $this->taskList->getLists();
-        $expected = array('name' => 'steven');
+        $expected = array();
         $this->assertEquals($expected, $result);
     }
 
