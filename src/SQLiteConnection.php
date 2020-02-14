@@ -25,7 +25,9 @@ class SQLiteConnection {
     {
         $command = '
         CREATE TABLE taskList (
-            id INTEGER,
+           id INTEGER not null
+		   constraint taskList_pk
+			primary key autoincrement,
             taskName TEXT NOT NULL
         )';
 
@@ -44,13 +46,32 @@ class SQLiteConnection {
                     }
         try {
             $sql = "
-                SELECT * FROM taskList
+                SELECT * FROM taskList WHERE id = '1'
             ";
 
-            $stm = $this->pdo->prepare( $sql );
-            $stm->execute();
+            $result = $this->pdo->query( $sql );
 
-            return $result = $stm->fetchAll(PDO::FETCH_OBJ);
+            return $result->fetch(PDO::FETCH_ASSOC);
+
+        } catch (\Exception $e) {
+            die($e->getMessage());
+        }
+
+    }
+
+    public function createList($listName= array()){
+
+        if ($this->pdo == null) {
+            $this->pdo = new \PDO("sqlite:" . Config::PATH_TO_SQLITE_FILE);
+        }
+        try {
+            $sql = "
+                INSERT INTO taskList (taskName)
+                VALUES ("."'".$listName['taskName']."')
+            ";
+
+            $result = $this->pdo->query( $sql);
+            return $result->fetch(PDO::FETCH_ASSOC);
 
         } catch (\Exception $e) {
             die($e->getMessage());
