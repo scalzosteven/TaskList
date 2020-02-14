@@ -39,7 +39,7 @@ class SQLiteConnection {
         }
     }
 
-    public function getLists($id)
+    public function getListsById($id)
     {
         $this->newConnection();
         try {
@@ -58,15 +58,13 @@ class SQLiteConnection {
 
     public function createList($listName= array()){
 
-        $this->newConnection();
-        $sqlToFind = "
-                SELECT * FROM taskList WHERE taskName = '".$listName['taskName']."'
-                ";
-        $resultToFind = $this->getQuery($sqlToFind);
-        if($resultToFind->fetch(PDO::FETCH_ASSOC)){
+        $taskName = $listName['taskName'];
+        $resultToFind = $this->getListsByTaskName($taskName);
+        if($resultToFind){
             throw new \Exception("Ya existe taskList");
         }
 
+        $this->newConnection();
         try {
             $sql = "
                 INSERT INTO taskList (taskName)
@@ -95,5 +93,22 @@ class SQLiteConnection {
         if ($this->pdo == null) {
             $this->pdo = new \PDO("sqlite:" . Config::PATH_TO_SQLITE_FILE);
         }
+    }
+
+    public function getListsByTaskName($taskName)
+    {
+        $this->newConnection();
+        try {
+            $sqlToFind = "
+                SELECT * FROM taskList WHERE taskName = '".$taskName."'
+                ";
+            $result = $this->getQuery($sqlToFind);
+
+            return $result->fetch(PDO::FETCH_ASSOC);
+
+        } catch (\Exception $e) {
+            die($e->getMessage());
+        }
+
     }
 }

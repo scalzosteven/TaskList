@@ -44,7 +44,7 @@ class Test extends TestCase
     public function should_get_all_list()
     {
         $id = 1;
-        $result = $this->taskList->getLists($id);
+        $result = $this->taskList->getListsById($id);
         $expected = array('id'=>'1',
             'taskName'=>'task1');
         $this->assertEquals($expected, $result);
