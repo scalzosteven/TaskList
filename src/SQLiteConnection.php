@@ -96,6 +96,24 @@ class SQLiteConnection {
         }
     }
 
+    public function removeListByTaskName($taskName){
+        $resultToFind = $this->getListsByTaskName($taskName);
+        $result = "No se realizo el borrado";
+        if($resultToFind) {
+            $this->newConnection();
+            try {
+                $sql = "
+                DELETE FROM  taskList
+                WHERE taskName = '" . $taskName . "'
+                ";
+                $this->getQuery($sql);
+                $result = "Borrado con exito";
+            } catch (\Exception $e) {
+                die($e->getMessage());
+            }
+        }
+        return $result;
+    }
     /**
      * @param string $sql
      * @return mixed

@@ -25,17 +25,17 @@ class Test extends TestCase
         $taskListMock->connect();
     }
 
-//
+
 //    /**
 //     * @test
 //     */
 //    public function should_create_list()
 //    {
-//        $id = 3;
-//        $listName = array('id'=>'3',
+//        $taskName = 'task3';
+//        $listName = array('id'=>'10',
 //            'taskName'=>'task3');
 //        $this->taskList->createList(array('taskName'=>'task3'));
-//        $result = $this->taskList->getListsById($id);
+//        $result = $this->taskList->getListsByTaskName($taskName);
 //        $this->assertEquals($listName, $result);
 //    }
     /**
@@ -75,14 +75,12 @@ class Test extends TestCase
     /**
      * @test
      */
-    public function should_remove_list()
-    {
-        $taskName = 'task3';
-        $listName = array('id'=>'3',
-            'taskName'=>'task3');
-        $this->taskList->removeListByTask($taskName);
-        $result = $this->taskList->getListsByTaskName($taskName);
-        $this->assertEquals($listName, $result);
-
-    }
+//    public function should_remove_list()
+//    {
+//        $taskName = 'task3';
+//        $expected = "Borrado con exito";
+//        $result = $this->taskList->removeListByTaskName($taskName);
+//        $this->assertEquals($expected, $result);
+//
+//    }
 }
