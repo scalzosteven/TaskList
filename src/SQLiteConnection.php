@@ -14,8 +14,8 @@ class SQLiteConnection {
      */
     public function connect() {
 
-        if ($this->pdo == null) {
-            $this->pdo = new \PDO("sqlite:" . Config::PATH_TO_SQLITE_FILE);
+        $this->newConnection();
+        if($this->pdo != null){
             $this->generateTable();
         }
 
@@ -24,11 +24,11 @@ class SQLiteConnection {
     public function generateTable()
     {
         $command = '
-        CREATE TABLE taskList (
-           id INTEGER not null
-		   constraint taskList_pk
-			primary key autoincrement,
-            taskName TEXT NOT NULL
+            CREATE TABLE taskList (
+               id INTEGER not null
+               constraint taskList_pk
+                primary key autoincrement,
+                taskName TEXT NOT NULL
         )';
 
         try {
@@ -41,15 +41,12 @@ class SQLiteConnection {
 
     public function getLists()
     {
-        if ($this->pdo == null) {
-            $this->pdo = new \PDO("sqlite:" . Config::PATH_TO_SQLITE_FILE);
-                    }
+        $this->newConnection();
         try {
             $sql = "
                 SELECT * FROM taskList WHERE id = '1'
-            ";
-
-            $result = $this->pdo->query( $sql );
+                ";
+            $result = $this->getQuery($sql);
 
             return $result->fetch(PDO::FETCH_ASSOC);
 
@@ -61,20 +58,34 @@ class SQLiteConnection {
 
     public function createList($listName= array()){
 
-        if ($this->pdo == null) {
-            $this->pdo = new \PDO("sqlite:" . Config::PATH_TO_SQLITE_FILE);
-        }
+        $this->newConnection();
         try {
             $sql = "
                 INSERT INTO taskList (taskName)
                 VALUES ("."'".$listName['taskName']."')
-            ";
+                ";
+            $result = $this->getQuery($sql);
 
-            $result = $this->pdo->query( $sql);
             return $result->fetch(PDO::FETCH_ASSOC);
 
         } catch (\Exception $e) {
             die($e->getMessage());
+        }
+    }
+
+    /**
+     * @param string $sql
+     * @return mixed
+     */
+    private function getQuery(string $sql)
+    {
+        return $this->pdo->query($sql);
+    }
+
+    private function newConnection(): void
+    {
+        if ($this->pdo == null) {
+            $this->pdo = new \PDO("sqlite:" . Config::PATH_TO_SQLITE_FILE);
         }
     }
 }
