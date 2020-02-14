@@ -39,12 +39,12 @@ class SQLiteConnection {
         }
     }
 
-    public function getLists()
+    public function getLists($id)
     {
         $this->newConnection();
         try {
             $sql = "
-                SELECT * FROM taskList WHERE id = '1'
+                SELECT * FROM taskList WHERE id = $id
                 ";
             $result = $this->getQuery($sql);
 
