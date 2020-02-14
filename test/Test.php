@@ -41,10 +41,22 @@ class Test extends TestCase
     /**
      * @test
      */
-    public function should_get_all_list()
+    public function should_get_list_by_id()
     {
         $id = 1;
         $result = $this->taskList->getListsById($id);
+        $expected = array('id'=>'1',
+            'taskName'=>'task1');
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function should_get_list_by_taskName()
+    {
+        $taskName = 'task1';
+        $result = $this->taskList->getListsByTaskName($taskName);
         $expected = array('id'=>'1',
             'taskName'=>'task1');
         $this->assertEquals($expected, $result);
