@@ -72,16 +72,17 @@ class Test extends TestCase
 
     }
 
-//    /**
-//     * @test
-//     */
-//    public function should_remove_list()
-//    {
-//        $taskListMock = $this->getMockBuilder(SQLiteConnection::class)
-//            ->setMethods(['removeList'])
-//            ->getMock();
-//        $taskListMock->expects($this->once())
-//            ->method('removeList');
-//        $taskListMock->removeList(array('taskName'=>'task2'));
-//    }
+    /**
+     * @test
+     */
+    public function should_remove_list()
+    {
+        $taskName = 'task3';
+        $listName = array('id'=>'3',
+            'taskName'=>'task3');
+        $this->taskList->removeListByTask($taskName);
+        $result = $this->taskList->getListsByTaskName($taskName);
+        $this->assertEquals($listName, $result);
+
+    }
 }
