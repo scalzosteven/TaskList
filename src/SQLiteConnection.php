@@ -59,6 +59,8 @@ class SQLiteConnection {
     public function createList($listName= array()){
 
         $this->newConnection();
+
+
         try {
             $sql = "
                 INSERT INTO taskList (taskName)

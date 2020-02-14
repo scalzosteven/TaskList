@@ -31,10 +31,10 @@ class Test extends TestCase
      */
     public function should_create_list()
     {
-        $id = 1;
-        $listName = array('id'=>'1',
-                            'taskName'=>'task1');
-        $this->taskList->createList(array('taskName'=>'task3'));
+        $id = 2;
+        $listName = array('id'=>'2',
+                            'taskName'=>'task2');
+        $this->taskList->createList(array('taskName'=>'task2'));
         $result = $this->taskList->getLists($id);
         $this->assertEquals($listName, $result);
     }
@@ -50,13 +50,13 @@ class Test extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-//    /**
-//     * @test
-//     */
-//    public function should_throw_error_when_try_create_a_list_with_a_name_existing()
-//    {
-//        $this->expectExceptionMessage("Ya existe taskList");
-//        $this->taskList->createList(array('taskName'=>'task1'));
-//
-//    }
+    /**
+     * @test
+     */
+    public function should_throw_error_when_try_create_a_list_with_a_name_existing()
+    {
+        $this->expectExceptionMessage("Ya existe taskList");
+        $this->taskList->createList(array('taskName'=>'task1'));
+
+    }
 }
