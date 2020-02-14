@@ -83,4 +83,11 @@ class Test extends TestCase
 //        $this->assertEquals($expected, $result);
 //
 //    }
+    public function should_throw_error_when_try_remove_a_list_not_exist()
+    {
+        $this->expectExceptionMessage("No existe este taskList");
+        $taskName = 'task3';
+        $this->taskList->removeListByTaskName($taskName);
+
+    }
 }
