@@ -2,6 +2,8 @@
 namespace App;
 
 
+use PDO;
+
 class SQLiteConnection {
 
     private $pdo;
@@ -12,8 +14,8 @@ class SQLiteConnection {
      */
     public function connect() {
 
-        if ($this->pdo == null) {
-            $this->pdo = new \PDO("sqlite:" . Config::PATH_TO_SQLITE_FILE);
+        $this->newConnection();
+        if($this->pdo != null){
             $this->generateTable();
         }
 
@@ -22,9 +24,11 @@ class SQLiteConnection {
     public function generateTable()
     {
         $command = '
-        CREATE TABLE taskList (
-            id INTEGER,
-            taskName TEXT NOT NULL
+            CREATE TABLE taskList (
+               id INTEGER not null
+               constraint taskList_pk
+                primary key autoincrement,
+                taskName TEXT NOT NULL
         )';
 
         try {
@@ -34,4 +38,97 @@ class SQLiteConnection {
             die($e->getMessage());
         }
     }
+
+    public function getListsById($id)
+    {
+        $this->newConnection();
+        try {
+            $sql = "
+                SELECT * FROM taskList WHERE id = $id
+                ";
+            $result = $this->getQuery($sql);
+
+            return $result->fetch(PDO::FETCH_ASSOC);
+
+        } catch (\Exception $e) {
+            die($e->getMessage());
+        }
+
+    }
+
+    public function getListsByTaskName($taskName)
+    {
+        $this->newConnection();
+        try {
+            $sqlToFind = "
+                SELECT * FROM taskList WHERE taskName = '".$taskName."'
+                ";
+            $result = $this->getQuery($sqlToFind);
+
+            return $result->fetch(PDO::FETCH_ASSOC);
+
+        } catch (\Exception $e) {
+            die($e->getMessage());
+        }
+
+    }
+
+    public function createList($listName= array()){
+
+        $taskName = $listName['taskName'];
+        $resultToFind = $this->getListsByTaskName($taskName);
+        if($resultToFind){
+            throw new \Exception("Ya existe taskList");
+        }
+
+        $this->newConnection();
+        try {
+            $sql = "
+                INSERT INTO taskList (taskName)
+                VALUES ("."'".$listName['taskName']."')
+                ";
+            $result = $this->getQuery($sql);
+
+            return $result->fetch(PDO::FETCH_ASSOC);
+
+        } catch (\Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function removeListByTaskName($taskName){
+        $resultToFind = $this->getListsByTaskName($taskName);
+        if(!$resultToFind) {
+            throw new \Exception("No existe este taskList");
+        }
+        $this->newConnection();
+        try {
+            $sql = "
+                DELETE FROM  taskList
+                WHERE taskName = '" . $taskName . "'
+                ";
+            $this->getQuery($sql);
+            $result = "Borrado con exito";
+        } catch (\Exception $e) {
+            die($e->getMessage());
+        }
+        return $result;
+    }
+    /**
+     * @param string $sql
+     * @return mixed
+     */
+    private function getQuery(string $sql)
+    {
+        return $this->pdo->query($sql);
+    }
+
+    private function newConnection(): void
+    {
+        if ($this->pdo == null) {
+            $this->pdo = new \PDO("sqlite:" . Config::PATH_TO_SQLITE_FILE);
+        }
+    }
+
+
 }
