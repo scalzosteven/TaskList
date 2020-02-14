@@ -56,6 +56,23 @@ class SQLiteConnection {
 
     }
 
+    public function getListsByTaskName($taskName)
+    {
+        $this->newConnection();
+        try {
+            $sqlToFind = "
+                SELECT * FROM taskList WHERE taskName = '".$taskName."'
+                ";
+            $result = $this->getQuery($sqlToFind);
+
+            return $result->fetch(PDO::FETCH_ASSOC);
+
+        } catch (\Exception $e) {
+            die($e->getMessage());
+        }
+
+    }
+
     public function createList($listName= array()){
 
         $taskName = $listName['taskName'];
@@ -95,20 +112,5 @@ class SQLiteConnection {
         }
     }
 
-    public function getListsByTaskName($taskName)
-    {
-        $this->newConnection();
-        try {
-            $sqlToFind = "
-                SELECT * FROM taskList WHERE taskName = '".$taskName."'
-                ";
-            $result = $this->getQuery($sqlToFind);
 
-            return $result->fetch(PDO::FETCH_ASSOC);
-
-        } catch (\Exception $e) {
-            die($e->getMessage());
-        }
-
-    }
 }

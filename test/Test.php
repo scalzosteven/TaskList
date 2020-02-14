@@ -25,18 +25,18 @@ class Test extends TestCase
         $taskListMock->connect();
     }
 
-
+//
 //    /**
 //     * @test
 //     */
 //    public function should_create_list()
 //    {
-//        $taskListMock = $this->getMockBuilder(SQLiteConnection::class)
-//            ->setMethods(['createList'])
-//            ->getMock();
-//        $taskListMock->expects($this->once())
-//            ->method('createList');
-//        $taskListMock->createList(array('taskName'=>'task1'));
+//        $id = 3;
+//        $listName = array('id'=>'3',
+//            'taskName'=>'task3');
+//        $this->taskList->createList(array('taskName'=>'task3'));
+//        $result = $this->taskList->getListsById($id);
+//        $this->assertEquals($listName, $result);
 //    }
     /**
      * @test
@@ -71,4 +71,17 @@ class Test extends TestCase
         $this->taskList->createList(array('taskName'=>'task1'));
 
     }
+
+//    /**
+//     * @test
+//     */
+//    public function should_remove_list()
+//    {
+//        $taskListMock = $this->getMockBuilder(SQLiteConnection::class)
+//            ->setMethods(['removeList'])
+//            ->getMock();
+//        $taskListMock->expects($this->once())
+//            ->method('removeList');
+//        $taskListMock->removeList(array('taskName'=>'task2'));
+//    }
 }
