@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="phpsqlite.db [2]" uuid="e7f57369-8ceb-4297-8910-2de17019713d">
+    <data-source source="LOCAL" name="phpsqlite.db" uuid="158af417-3240-4cca-aa40-5eb57ce3cc00">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>

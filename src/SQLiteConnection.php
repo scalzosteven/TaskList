@@ -59,7 +59,13 @@ class SQLiteConnection {
     public function createList($listName= array()){
 
         $this->newConnection();
-
+        $sqlToFind = "
+                SELECT * FROM taskList WHERE taskName = '".$listName['taskName']."'
+                ";
+        $resultToFind = $this->getQuery($sqlToFind);
+        if($resultToFind->fetch(PDO::FETCH_ASSOC)){
+            throw new \Exception("Ya existe taskList");
+        }
 
         try {
             $sql = "

@@ -26,18 +26,18 @@ class Test extends TestCase
     }
 
 
-    /**
-     * @test
-     */
-    public function should_create_list()
-    {
-        $id = 2;
-        $listName = array('id'=>'2',
-                            'taskName'=>'task2');
-        $this->taskList->createList(array('taskName'=>'task2'));
-        $result = $this->taskList->getLists($id);
-        $this->assertEquals($listName, $result);
-    }
+//    /**
+//     * @test
+//     */
+//    public function should_create_list()
+//    {
+//        $taskListMock = $this->getMockBuilder(SQLiteConnection::class)
+//            ->setMethods(['createList'])
+//            ->getMock();
+//        $taskListMock->expects($this->once())
+//            ->method('createList');
+//        $taskListMock->createList(array('taskName'=>'task1'));
+//    }
     /**
      * @test
      */
